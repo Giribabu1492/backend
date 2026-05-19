@@ -29,9 +29,12 @@ pipeline {
                 sh 'npm install'
                 
             }
+      }
     }
+
+}      
+    
    
         
 
 
-}
