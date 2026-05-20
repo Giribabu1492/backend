@@ -4,8 +4,9 @@ pipeline {
     environment {
         PROJECT = "EXPENSE"
         COMPONENT = "BACKEND"
-        APP_VERSION = ""
         ACC_Id = "805160322688"
+        APP_VERSION = ""
+
     }
 
     stages {
@@ -13,7 +14,7 @@ pipeline {
             steps {
                 script {
                     def packagejson = readJSON file: 'package.json'
-                    env.APP_VERSION = packagejson.version
+                    env.APP_VERSION = packagejson.version ?: "latest"
                     echo "version is ${env.APP_VERSION}"
                 }
             }
@@ -31,9 +32,9 @@ pipeline {
                     sh """
                         aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_Id}.dkr.ecr.us-east-1.amazonaws.com
 
-                        docker build -t ${ACC_Id}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${APP_VERSION} .
+                        docker build -t ${ACC_Id}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${env.APP_VERSION} .
 
-                        docker push ${ACC_Id}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${APP_VERSION}
+                        docker push ${ACC_Id}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${env.APP_VERSION}
                     """
                 }
             }
