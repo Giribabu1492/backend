@@ -14,7 +14,7 @@ pipeline {
                 script {
                     def packageJson = readJSON file: 'package.json'
                     env.APP_VERSION = packageJson.version   // use env to persist
-                    echo "Version is: ${env.APP_VERSION}"
+                    echo "Version is: ${APP_VERSION}"
                 }
             }
         }   // ✅ closed stage
