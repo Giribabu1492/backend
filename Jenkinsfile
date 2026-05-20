@@ -5,10 +5,21 @@ pipeline {
         PROJECT = "EXPENSE"
         COMPONENT = "BACKEND"
         ACC_Id = "805160322688"
-        APP_VERSION = "1.0.0"
+        APP_VERSION = " "
     }
 
     stages {
+
+         stage('Read Version') {
+            steps {
+               script{
+                 def packageJson = readJSON file: 'package.json'
+                 APP_VERSION = packageJson.version
+                 echo "Version is: $APP_VERSION"
+               }
+            }
+
+
         stage('Install dependencies') {
             steps {
                 sh 'npm install'
