@@ -7,6 +7,10 @@ pipeline {
         ACC_Id = "805160322688"
         APP_VERSION = " "
     }
+    options {
+       disableConcurrentBuilds()
+    }
+
 
     stages {
         stage('Read Version') {
@@ -17,7 +21,7 @@ pipeline {
                     echo "Version is: ${APP_VERSION}"
                 }
             }
-        }   // ✅ closed stage
+        }   
 
         stage('Install dependencies') {
             steps {
