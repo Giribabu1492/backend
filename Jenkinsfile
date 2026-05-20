@@ -9,16 +9,15 @@ pipeline {
     }
 
     stages {
-
-         stage('Read Version') {
+        stage('Read Version') {
             steps {
-               script{
-                 def packageJson = readJSON file: 'package.json'
-                 APP_VERSION = packageJson.version
-                 echo "Version is: $APP_VERSION"
-               }
+                script {
+                    def packageJson = readJSON file: 'package.json'
+                    env.APP_VERSION = packageJson.version   // use env to persist
+                    echo "Version is: ${env.APP_VERSION}"
+                }
             }
-
+        }   // ✅ closed stage
 
         stage('Install dependencies') {
             steps {
