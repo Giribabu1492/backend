@@ -39,9 +39,21 @@ pipeline {
 
                 docker push ${ACC_Id}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${APP_VERSION}
             """
+                }
+            }
         }
-    }
-}
+
+        post { 
+        always { 
+            echo 'I will always say Hello again!'
+            deleteDir()
+        }
+        failure { 
+            echo 'I will run when pipeline is failed'
+        }
+        success { 
+            echo 'I will run when pipeline is success'
+        }
 
 
 
