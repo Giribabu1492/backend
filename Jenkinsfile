@@ -11,6 +11,10 @@ pipeline {
        disableConcurrentBuilds()
     }
 
+    parameters {
+        string(name: 'deploy', description: 'Enter the application version')
+        
+    }
 
     stages {
         stage('Read Version') {
@@ -48,6 +52,19 @@ pipeline {
             """
                 }
             }
+        }
+
+        stage('Trigger Deploy') {
+           when{
+
+                expression { params.deploy }
+            }
+            steps {
+                script {
+                    build job: 'backend-cd', parameters: [string(name: 'version', value: "${APP_VERSION}")],wait: true
+                }
+            }
+           }
         }
 
         
