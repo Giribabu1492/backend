@@ -1,1 +1,10 @@
-@Library('jenkins-shared-library') _
+@Library('jenkins-shared-library')_
+
+
+def configMap = [
+
+
+greeter: 'Hello']
+
+
+nodejsEksPipeline(configMap)
